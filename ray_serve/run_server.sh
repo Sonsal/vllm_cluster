@@ -1,0 +1,1 @@
+serve run server:build_app model="NousResearch/Meta-Llama-3-8B-Instruct" tensor-parallel-size=2 accelerator="GPU"

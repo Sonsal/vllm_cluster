@@ -1,0 +1,72 @@
+{
+    "host":[
+                {
+                    "decription":"Создать подсеть",
+                    "localization":"host",
+                    "command":"docker network create -d bridge cluster-net"
+                },
+                {
+                    "decription":"Создать контейнер-ноду 1",
+                    "localization":"host",
+                    "command":"docker run --network cluster-net --privileged --name node_1 -it --gpus all ubuntu:22.04"
+                },
+                {
+                    "decription":"Создать контейнер-ноду 2",
+                    "localization":"host",
+                    "command":"docker run --network cluster-net --privileged --name node_2 -it --gpus all ubuntu:22.04"
+                },
+                {
+                    "decription":"Создать контейнер-ноду 3",
+                    "localization":"host",
+                    "command":"docker run --network cluster-net --privileged --name node_3 -it --gpus all ubuntu:22.04"
+                }
+            ],
+    "node_1":[
+                {
+            
+                    "decription":"Скопирвать docker_commands.sh",
+                    "localization":"node_1",
+                    "command":"docker cp \"C:\\Users\\faxdi\\OneDrive\\Рабочий стол\\VS\\vLLM_cluster\\docker_install.sh\" node_1:/docker_install.sh"
+                },
+                {
+            
+                    "decription":"Запустить docker_commands.sh",
+                    "localization":"node_1",
+                    "command":"bash docker_install.sh"
+                },
+                {
+            
+                    "decription":"Запустить демон",
+                    "localization":"node_1",
+                    "command":"dockerd &"
+                },
+                {
+            
+                    "decription":"Загрузить image Ubuntu 22.04",
+                    "localization":"node_1",
+                    "command":"docker pull ubuntu:22.04"
+                },
+                {
+            
+                    "decription":"Посмотреть IP в подсети",
+                    "localization":"node_1",
+                    "command":"cat /etc/hosts"
+                },
+                {
+            
+                    "decription":"Создать swarm",
+                    "localization":"node_1",
+                    "command":"docker swarm init --advertise-addr <MANAGER-IP>"
+                },
+                {
+                    "decription":"Передать в контейнер run_cluster.sh",
+                    "localization":"node_1",
+                    "command":"docker cp \"C:\\Users\\faxdi\\OneDrive\\Рабочий стол\\VS\\vLLM_cluster\\run_cluster.sh\" node_1:/run_cluster.sh"
+                },
+                {
+                    "decription":"Установить NVIDIA Container CUDA Toolkit",
+                    "localization":"node_1",
+                    "command":"apt-get update  && apt-get install -y nvidia-container-toolkit-base"
+                }
+    ]
+}
