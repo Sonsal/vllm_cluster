@@ -8,7 +8,7 @@ client = OpenAI(
     api_key="NOT A REAL KEY",
 )
 chat_completion = client.chat.completions.create(
-    model="Qwen/Qwen2.5-0.5B-Instruct",
+    model="Qwen/Qwen2.5-3B-Instruct",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {
@@ -24,6 +24,3 @@ chat_completion = client.chat.completions.create(
 for chat in chat_completion:
     if chat.choices[0].delta.content is not None:
         print(chat.choices[0].delta.content, end="")
-
-import traceback
-traceback.format_exc()

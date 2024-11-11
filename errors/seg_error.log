@@ -1,0 +1,75 @@
+ubuntu@node1:~$ sudo docker exec -it node /bin/bash
+root@node1:/vllm-workspace# ls
+'=0.44.0'   examples
+root@node1:/vllm-workspace# vllm serve "Qwen/Qwen2.5-0.5B-Instruct" --pipeline-parallel-size 2 --dtype "float16"
+INFO 11-11 09:05:52 api_server.py:528] vLLM API server version 0.6.3.post1
+INFO 11-11 09:05:52 api_server.py:529] args: Namespace(subparser='serve', model_tag='Qwen/Qwen2.5-0.5B-Instruct', config='', host=None, port=8000, uvicorn_log_level='info', allow_credentials=False, allowed_origins=['*'], allowed_methods=['*'], allowed_headers=['*'], api_key=None, lora_modules=None, prompt_adapters=None, chat_template=None, response_role='assistant', ssl_keyfile=None, ssl_certfile=None, ssl_ca_certs=None, ssl_cert_reqs=0, root_path=None, middleware=[], return_tokens_as_token_ids=False, disable_frontend_multiprocessing=False, enable_auto_tool_choice=False, tool_call_parser=None, tool_parser_plugin='', model='Qwen/Qwen2.5-0.5B-Instruct', tokenizer=None, skip_tokenizer_init=False, revision=None, code_revision=None, tokenizer_revision=None, tokenizer_mode='auto', trust_remote_code=False, download_dir=None, load_format='auto', config_format=<ConfigFormat.AUTO: 'auto'>, dtype='float16', kv_cache_dtype='auto', quantization_param_path=None, max_model_len=None, guided_decoding_backend='outlines', distributed_executor_backend=None, worker_use_ray=False, pipeline_parallel_size=2, tensor_parallel_size=1, max_parallel_loading_workers=None, ray_workers_use_nsight=False, block_size=16, enable_prefix_caching=False, disable_sliding_window=False, use_v2_block_manager=False, num_lookahead_slots=0, seed=0, swap_space=4, cpu_offload_gb=0, gpu_memory_utilization=0.9, num_gpu_blocks_override=None, max_num_batched_tokens=None, max_num_seqs=256, max_logprobs=20, disable_log_stats=False, quantization=None, rope_scaling=None, rope_theta=None, enforce_eager=False, max_context_len_to_capture=None, max_seq_len_to_capture=8192, disable_custom_all_reduce=False, tokenizer_pool_size=0, tokenizer_pool_type='ray', tokenizer_pool_extra_config=None, limit_mm_per_prompt=None, mm_processor_kwargs=None, enable_lora=False, max_loras=1, max_lora_rank=16, lora_extra_vocab_size=256, lora_dtype='auto', long_lora_scaling_factors=None, max_cpu_loras=None, fully_sharded_loras=False, enable_prompt_adapter=False, max_prompt_adapters=1, max_prompt_adapter_token=0, device='auto', num_scheduler_steps=1, multi_step_stream_outputs=True, scheduler_delay_factor=0.0, enable_chunked_prefill=None, speculative_model=None, speculative_model_quantization=None, num_speculative_tokens=None, speculative_disable_mqa_scorer=False, speculative_draft_tensor_parallel_size=None, speculative_max_model_len=None, 
+speculative_disable_by_batch_size=None, ngram_prompt_lookup_max=None, ngram_prompt_lookup_min=None, spec_decoding_acceptance_method='rejection_sampler', typical_acceptance_sampler_posterior_threshold=None, typical_acceptance_sampler_posterior_alpha=None, disable_logprobs_during_spec_decoding=None, model_loader_extra_config=None, ignore_patterns=[], preemption_mode=None, served_model_name=None, qlora_adapter_name_or_path=None, otlp_traces_endpoint=None, collect_detailed_traces=None, disable_async_output_proc=False, override_neuron_config=None, scheduling_policy='fcfs', disable_log_requests=False, max_log_len=None, disable_fastapi_docs=False, dispatch_function=<function serve at 0x77088b77e840>)   
+WARNING 11-11 09:05:57 config.py:1668] Casting torch.bfloat16 to torch.float16.
+INFO 11-11 09:06:06 config.py:905] Defaulting to use ray for distributed inference
+WARNING 11-11 09:06:06 arg_utils.py:1019] [DEPRECATED] Block manager v1 has been removed, and setting --use-v2-block-manager to True or False has no effect on vLLM behavior. Please remove --use-v2-block-manager in your engine argument. If your use case is not supported by SelfAttnBlockSpaceManager (i.e. block manager v2), please file an issue with detailed information.
+WARNING 11-11 09:06:06 config.py:372] Async output processing can not be enabled with pipeline parallel
+2024-11-11 09:06:06,226 INFO worker.py:1601 -- Connecting to existing Ray cluster at address: 172.19.0.177:6379...
+2024-11-11 09:06:06,239 INFO worker.py:1786 -- Connected to Ray cluster.
+INFO 11-11 09:06:07 llm_engine.py:237] Initializing an LLM engine (v0.6.3.post1) with config: model='Qwen/Qwen2.5-0.5B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-0.5B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, rope_scaling=None, rope_theta=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=32768, download_dir=None, load_format=LoadFormat.AUTO, tensor_parallel_size=1, pipeline_parallel_size=2, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, quantization_param_path=None, device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend='outlines'), observability_config=ObservabilityConfig(otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=0, served_model_name=Qwen/Qwen2.5-0.5B-Instruct, num_scheduler_steps=1, chunked_prefill_enabled=False multi_step_stream_outputs=True, enable_prefix_caching=False, use_async_output_proc=False, use_cached_outputs=False, mm_processor_kwargs=None)
+INFO 11-11 09:06:08 ray_gpu_executor.py:134] use_ray_spmd_worker: False
+(RayWorkerWrapper pid=107, ip=172.19.0.143) INFO 11-11 09:06:18 selector.py:224] Cannot use FlashAttention-2 backend for Volta and Turing GPUs.
+(RayWorkerWrapper pid=107, ip=172.19.0.143) INFO 11-11 09:06:18 selector.py:115] Using XFormers backend.
+(RayWorkerWrapper pid=107, ip=172.19.0.143) /usr/local/lib/python3.12/dist-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a 
+future version of PyTorch.
+(RayWorkerWrapper pid=107, ip=172.19.0.143)   @torch.library.impl_abstract("xformers_flash::flash_fwd")
+INFO 11-11 09:06:18 selector.py:224] Cannot use FlashAttention-2 backend for Volta and Turing GPUs.
+INFO 11-11 09:06:18 selector.py:115] Using XFormers backend.
+(RayWorkerWrapper pid=107, ip=172.19.0.143) /usr/local/lib/python3.12/dist-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a 
+future version of PyTorch.
+(RayWorkerWrapper pid=107, ip=172.19.0.143)   @torch.library.impl_abstract("xformers_flash::flash_bwd")
+/usr/local/lib/python3.12/dist-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
+  @torch.library.impl_abstract("xformers_flash::flash_fwd")
+/usr/local/lib/python3.12/dist-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
+  @torch.library.impl_abstract("xformers_flash::flash_bwd")
+INFO 11-11 09:07:04 utils.py:1008] Found nccl from library libnccl.so.2
+INFO 11-11 09:07:04 pynccl.py:63] vLLM is using nccl==2.20.5
+(RayWorkerWrapper pid=107, ip=172.19.0.143) INFO 11-11 09:07:04 utils.py:1008] Found nccl from library libnccl.so.2
+(RayWorkerWrapper pid=107, ip=172.19.0.143) INFO 11-11 09:07:04 pynccl.py:63] vLLM is using nccl==2.20.5
+ERROR 11-11 09:07:04 worker_base.py:464] Error executing method init_device. This might cause deadlock in distributed execution.
+ERROR 11-11 09:07:04 worker_base.py:464] Traceback (most recent call last):
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/worker/worker_base.py", line 456, in execute_method
+ERROR 11-11 09:07:04 worker_base.py:464]     return executor(*args, **kwargs)
+ERROR 11-11 09:07:04 worker_base.py:464]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/worker/worker.py", line 176, in init_device    
+ERROR 11-11 09:07:04 worker_base.py:464]     init_worker_distributed_environment(self.parallel_config, self.rank,
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/worker/worker.py", line 456, in init_worker_distributed_environment
+ERROR 11-11 09:07:04 worker_base.py:464]     ensure_model_parallel_initialized(parallel_config.tensor_parallel_size,
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 1051, in ensure_model_parallel_initialized
+ERROR 11-11 09:07:04 worker_base.py:464]     initialize_model_parallel(tensor_model_parallel_size,
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 1032, in initialize_model_parallel
+ERROR 11-11 09:07:04 worker_base.py:464]     _PP = init_model_parallel_group(group_ranks,
+ERROR 11-11 09:07:04 worker_base.py:464]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 856, in init_model_parallel_group
+ERROR 11-11 09:07:04 worker_base.py:464]     return GroupCoordinator(
+ERROR 11-11 09:07:04 worker_base.py:464]            ^^^^^^^^^^^^^^^^^
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 214, in __init__
+ERROR 11-11 09:07:04 worker_base.py:464]     self.pynccl_comm = PyNcclCommunicator(
+ERROR 11-11 09:07:04 worker_base.py:464]                        ^^^^^^^^^^^^^^^^^^^
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl.py", line 89, in __init__
+ERROR 11-11 09:07:04 worker_base.py:464]     self.comm: ncclComm_t = self.nccl.ncclCommInitRank(
+ERROR 11-11 09:07:04 worker_base.py:464]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl_wrapper.py", line 244, in ncclCommInitRank
+ERROR 11-11 09:07:04 worker_base.py:464]     self.NCCL_CHECK(self._funcs["ncclCommInitRank"](ctypes.byref(comm),
+ERROR 11-11 09:07:04 worker_base.py:464]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl_wrapper.py", line 223, in NCCL_CHECK
+ERROR 11-11 09:07:04 worker_base.py:464]     raise RuntimeError(f"NCCL error: {error_str}")
+ERROR 11-11 09:07:04 worker_base.py:464] RuntimeError: NCCL error: unhandled system error (run with NCCL_DEBUG=INFO for details)
+*** SIGSEGV received at time=1731344824 on cpu 1 ***
+PC: @     0x7708c769d908  (unknown)  socketProgressOpt()
+    @     0x77097448c520       6448  (unknown)
+    @ ... and at least 1 more frames
+[2024-11-11 09:07:04,496 E 192 393] logging.cc:440: *** SIGSEGV received at time=1731344824 on cpu 1 ***
+[2024-11-11 09:07:04,496 E 192 393] logging.cc:440: PC: @     0x7708c769d908  (unknown)  socketProgressOpt()
+[2024-11-11 09:07:04,496 E 192 393] logging.cc:440:     @     0x77097448c520       6448  (unknown)
+[2024-11-11 09:07:04,496 E 192 393] logging.cc:440:     @ ... and at least 1 more frames
+Fatal Python error: Segmentation fault
+
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, torch._C, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, charset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, yaml._yaml, markupsafe._speedups, PIL._imaging, psutil._psutil_linux, psutil._psutil_posix, msgspec._core, sentencepiece._sentencepiece, PIL._imagingft, regex._regex, msgpack._cmsgpack, google._upb._message, setproctitle, uvloop.loop, ray._raylet, multidict._multidict, propcache._helpers_c, yarl._quoting_c, aiohttp._helpers, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket, frozenlist._frozenlist, zmq.backend.cython._zmq, pyarrow.lib, pyarrow._json (total: 48)
+Segmentation fault (core dumped)
+root@node1:/vllm-workspace#
