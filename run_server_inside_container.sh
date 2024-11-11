@@ -1,14 +1,16 @@
 bash run_cluster.sh \
                   vllm/vllm-openai \
-                  192.168.12.210 \
+                  176.99.131.117 \
                   --head \
-                  /bin
+                  /bin \
+                  --privileged
 
 bash run_cluster.sh \
                   vllm/vllm-openai \
                   192.168.12.210 \
                   --worker \
-                  /bin
+                  /bin \
+                  --privileged
 
 sudo docker exec -it node /bin/bash
 
