@@ -4,11 +4,11 @@ from openai import OpenAI
 client = OpenAI(
     # Replace the URL if deploying your app remotely
     # (e.g., on Anyscale or KubeRay).
-    base_url="http://localhost:8000/v1",
+    base_url="http://192.168.13.220:8000/v1",
     api_key="NOT A REAL KEY",
 )
 chat_completion = client.chat.completions.create(
-    model="Qwen/Qwen2.5-7B-Instruct-GPTQ-Int8",
+    model="Qwen/Qwen2.5-Coder-3B-Instruct",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {

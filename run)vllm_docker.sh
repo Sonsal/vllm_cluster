@@ -1,0 +1,1 @@
+docker run -itd --entrypoint /bin/bash --network host --name node --shm-size 10.24g --gpus all vllm/vllm-openai

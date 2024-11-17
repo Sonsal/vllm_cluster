@@ -1,0 +1,16 @@
+sudo ubuntu-drivers list
+#sudo ubuntu-drivers list --gpgpu
+
+sudo ubuntu-drivers install nvidia:535
+# sudo ubuntu-drivers install --gpgpu nvidia:535-server
+
+# Установка драйверов (выбирать не для сервера)
+sudo ubuntu-drivers list
+sudo ubuntu-drivers install
+nvidia-smi
+
+# https://askubuntu.com/questions/841876/how-to-disable-nouveau-kernel-driver
+echo 'install nouveau /bin/false' | sudo tee /etc/modprobe.d/blacklist-nouveau.conf
+sudo update-initramfs -u
+reboot
+sudo modprobe nouveau # Должно выкидывать ошибку
