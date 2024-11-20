@@ -1,0 +1,6 @@
+{
+    "model":"Qwen/Qwen2.5-Coder-3B-Instruct",
+    "disable_log_requests": true,
+    "gpu_memory_utilization": 0.9,
+    "enforce_eager": true
+}
